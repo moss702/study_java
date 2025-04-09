@@ -32,7 +32,6 @@ public class Ex250409 {
 		else {
 		System.out.println("존재하지 않는 계정입니다");
 		}
-		
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 		//2번 문제 : 3의 배수이면서 짝수인가?
@@ -40,11 +39,10 @@ public class Ex250409 {
 		// 3의 배수 그리고 짝수 여부를 동시에 판별
 		// 3의 배수, 짝수, 3의 배수이면서 짝수, 둘다 아닌 경우
 		
-		//입력받은 숫자 % 3이 0인경우 3의 배수.
-		//입력받은 숫자 % 2가 0이어야 짝수.
+		// 입력받은 숫자 % 3이 0인경우 3의 배수.
+		// 입력받은 숫자 % 2가 0이어야 짝수.
 	
 		System.out.print("[2문] 입력한 숫자가 3의 배수인지 짝수인지 알려줍니다. >");				
-		//입력받은 숫자 담아둘 변수 하나 만들기
 		Scanner scanNumthr = new Scanner (System.in);
 		int numthr = scanNumthr.nextInt();
 		//nextInt : 입력값을 인트로 저장
@@ -72,13 +70,12 @@ public class Ex250409 {
 		}
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-		//3번 문제 : 월(month)을 입력 받아서 계절을 출력
-		// 봄(3 4 5), 여름(6 7 8) ... 3개월씩
+		//3번 문제 : 월(month)을 입력 받아서 계절을 출력 * 각 계절은 3개월씩
 		System.out.print("[3문] 입력한 숫자에 맞는 계절을 알려줍니다 >");				
 		Scanner scanSeason = new Scanner (System.in);
 		int season = scanSeason.nextInt();
 		
-		if (season > 0 && season < 13) {
+		if (season > 0 && season < 13) { //예외처리 먼저 해줍니다.
 			switch (season) {
 				case 3 : case 4 : case 5 :
 					System.out.println(season+"월은 봄입니다.");
