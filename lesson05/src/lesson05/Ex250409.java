@@ -19,7 +19,7 @@ public class Ex250409 {
 		String inputPassword = scanPassword.nextLine();
 		//사용자의 입력을 문자열로 만들어 주는 변수가 반드시 필요한가?
 		//바로 scanAdmin, scanPassword에 대입시키면 안되는건가?
-		//없으면 안됨.. 입력받은거 문자취급안해줘서 비교를 못함..
+		//..없으면 안됨.. 입력받은거 문자취급안해줘서 비교를 못함..
 		
 		if(admin.equals(inputAdmin)) {
 			if(password.equals(inputPassword)) {

@@ -16,18 +16,11 @@ public class Ex250409_2 {
 	
 	System.out.println("[2문] 놀이기구에 탈 수 있을까");
 
-	// 놀이기구 타려는 사람의 스펙
 	int age = 4 ;
 	int height = 120 ;
-
 	boolean parent = false ; // T : 부모동반, F : 부모동반하지않음
 	boolean hearchDease = false ; // T : 심장질환없음, F : 심장질환있음
-	//처음에는 parent랑 hearchDease도 int 1,0로 처리했는데 
-	//bool과 int의 용량이 4배 차이 나는군..?
-	//양자택일 변수는 bool 쓰는걸 습관 들여보자
-	
-	//*** 코딩할 때 true랑 false를 T,F처럼 더 줄여서 쓸수있는 방법은 없나요?
-	//개발자들은 true false를 엄청 빠르게 타이핑하는지 궁금합니다..
+
 	
 	boolean noru = false ;
 		//기본값 = 탑승불가
@@ -46,14 +39,19 @@ public class Ex250409_2 {
 			}
 		}	
 	}
-	System.out.println(noru == true ? "탑승가능":"탑승불가");
+//	System.out.println(noru == true ? "탑승가능":"탑승불가");
+	//이렇게 하면 안된대 왜 안되는지 잘 모루겟오
+	System.out.println(noru ? "탑승가능":"탑승불가");
+	//등치비교할때 논리타입은 쓰지않는게 좋다
+	
+	//이거 연산문제래!!!! 어케 연산하는겨!??
 	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 	//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 	System.out.println("[3문] 연도를 입력하면 윤년인지 아닌지 판단");
 	
 	int year = 1988;
-	// 윤년 : 1988, 1992, 1996
+	// 윤년 : 1988, 1992, 1996, 2020
 	boolean leapYear = false ;
 		
 			if (year % 4 == 0 || year % 400 == 0) {
@@ -78,7 +76,7 @@ public class Ex250409_2 {
 	change = change % 10 ;
 	int ochun = change / 5 ;
 	change = change % 5 ;
-	int ilchun = change / 1 ; 
+	int ilchun = change ; 
 	//몫과 나머지를 한줄로 쓸수 없을까.
 	System.out.println(price+"원을 가장 적은 지폐수량으로 지불하려면,");
 	System.out.println("5만원권 : " + oman + "장");
