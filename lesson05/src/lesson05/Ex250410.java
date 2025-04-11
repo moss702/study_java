@@ -7,7 +7,7 @@ public class Ex250410 {
 		// 사과의 갯수를 123개라고 했을때 필요한 상자의 갯수 구하기
 		// 제한 : 연산자만 사용하기 :: if 쓰면 안돼~ 삼항연산자 까지는 사용해도됨.
 		// 박스에 담는 갯수가 달라지면 대응 x . 담을수있는 제한< 을 변수하나 하면 좋겟다
-		int apple = 123 ;	
+		int apple = 123 ;
 		int box = 10;
 		
 //		System.out.println(apple / box + apple % box == 0 ? 0 : 1);
@@ -39,17 +39,17 @@ public class Ex250410 {
 		System.out.println(sum);
 		
 		int num = 1 ;
-		int sum = 0 ;
+		int sum2 = 0 ;
 		// int buho = -1 ; // 맞네!!! -1 변수를 만들 필요가 없지!!!! 그냥 -num 하면 되네!
 
 		// 계속 1씩증가하고 다 더하는데 짝수일때만 부호 붙여버려..
 		for(num = 1 ; num < 101 ; num++) { //num이 100이 될때까지 1씩 증가
 			if (num % 2 == 0) { //num이 짝수일때마다 음수 부호를 붙인다
-				sum -= num;		//그리고 그걸 다시 sum에 더해..
+				sum2 -= num;		//그리고 그걸 다시 sum에 더해..
 	//***********************여기 다시읽자 맨정신으로 ^^;
 			}
 		}
-		System.out.println(sum);
+		System.out.println(sum2);
 		//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ		
 		// 3. 소수판정 (prime number)
 		// 지정된 자연수가 소수인지 아닌지를 출력
@@ -60,9 +60,9 @@ public class Ex250410 {
 		int num1 = 12 ; //임의의 숫자
 		int count = 0 ;
 		
-		for(int i = 1 ; i <= num ; i++) {
-			System.out.printf("%d : %d >> %s", i, num % i, num % i == 0 ? "약수" : "약수아님");
-			if(num % i == 0) {
+		for(int i = 1 ; i <= num1 ; i++) {
+			System.out.printf("%d : %d >> %s\n", i, num1 % i, num1 % i == 0 ? "약수" : "약수아님");
+			if(num1 % i == 0) {
 				count++;
 			}
 		}
