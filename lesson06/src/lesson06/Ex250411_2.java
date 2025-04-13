@@ -22,7 +22,7 @@ public class Ex250411_2 {
 		int oddSum = 0;
 		
 		//for문을 이용하여 반복 합계 연산
-		for(int i =1 ; i < 101; i++) {
+		for(int i =1 ; i <= 100; i++) {
 			if(i % 2 == 0) { //짝수면
 				evenSum += i;
 			}
@@ -42,13 +42,12 @@ public class Ex250411_2 {
 				} 				
 			}
 		}
-		//근데 이거 배열 써도 비슷하게 나올 수 있겠다.. 배열 복습하고 나서 함 해보자
 		//====================================================================
 		System.out.println("===============================================");
 		System.out.print("[4문 : 이중for문을 이용해서 실행결과 출력");
 
 		for (int a = 0 ; a < 6 ; a++) {
-			for (int b = 0 ; b < 6 && a > b; b++) {
+			for (int b = 0 ; b < 5 && a > b; b++) {
 				System.out.print("*");				
 			}
 			System.out.println();
@@ -56,23 +55,40 @@ public class Ex250411_2 {
 		//====================================================================
 		System.out.println("===============================================");
 		System.out.println("[5문 : 이중for문을 이용해서 실행결과 출력");
-		int s = 0 ;
-		for (int a = 0 ; a < 6 ; a++) {
-			for (int b = 0 ; b < 6 && a == s ; b++) {
+		for (int a = 5 ; a > 0 ; a--) {
+			for (int b = 0 ; b < 5 && a > b; b++) {
 					System.out.print("*"); //a가 0일때 별 찍기 : 첫줄 별 찍기
-					s++;
 			}
+			//작아지면 된다.! i가 늘어날때 조건을.!
 			System.out.println(" ");	
 		}
 		//====================================================================
-/*		System.out.println("===============================================");
+		System.out.println("===============================================");
 		System.out.println("[6문 : 이중for문을 이용해서 실행결과 출력");
-		for (int a = 0 ; a < 6 ; a++) {
-			for (int b = 0 ; b < 6 ; b++) {
-				System.out.print("*");	
+		// 		
+		int oddNum = 1 ; //별 찍을 홀수  1 3 5 7 9
+		
+		for (int a = 0 ; a < 5 ; a++) { //행 5줄
+			for (int b = 4 ; b > a ; b--) { //공백 표시해줄 녀석
+				System.out.print("b");
 			}
+			for (int c = 0 ; c < oddNum ; c++) {//홀수마다 점찍어줄녀석
+			System.out.print("c");
+			}
+			oddNum += 2; //홀수여야하니까 항상 2 더함
 			System.out.println();
-		} */
+		} 
+		System.out.println("\n-------------------");
+//		for (int i = 0 ; i < 5 ; i++) {
+//			for (int j = 0 ; j < i; j++) { 
+//				for(int k = 1; k <= (10 - i) / 2 && j == 1; k++) {
+//					System.out.print(" ");
+//				}
+//				System.out.print("*");
+//				i++;
+//			}
+//			System.out.println();
+//		} //상현님 코드
 		//====================================================================
 		System.out.println("===============================================");
 		System.out.println("[7문 : 주사위의 눈이 6이 나올때까지 반복굴리고, 주사위 굴린 횟수 출력");
