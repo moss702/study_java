@@ -18,7 +18,7 @@ public class Ex250414 {
 //			fibo[2] = fibo[0]+[1];
 //			fibo[3] = fibo[1]+[2];
 //			fibo[4] = fibo[3]+[4];		
-		  //fibo[0]->[1]의 규칙 정의가 어렵습니다.. 일단 수동으로 변수 채워넣기....
+		  //fibo[0]->[1]의 규칙은 뭘까요..? 일단 수동으로 변수 채워넣기....
 		
 		for (int i = 2 ; i < fibo.length ; i++) {
 				fibo[i] = fibo[i-2] + fibo[i-1];		
@@ -43,14 +43,21 @@ public class Ex250414 {
 		System.out.println(Arrays.toString(num));
 		
 		
-		int[] num2 = new int [50];
+		int[] num2 = new int [20];
 		// 2. 중복값 제거하기........
-		// 어떻게 중복값을 체크하지? 넣으면서 체크...?
+		// 어떻게 중복값을 체크하지? 넣으면서 체크...? <<이거같아요!!
 		// num2에는 순서대로 1~20 을 넣고..... 동일한지 체크..?
 		// 안에 그 값이 탐색 되었을때 그 자리에 있는지 없는지 
-			for (int i = 0 ; i < num2.length ; i++) {
-				num[i] = num2[i] ; //
+		
+		
+		for (int i = 0 ; i < num2.length ; i++) {
+			for (int j = 0 ; j < num.length ; j++) {
+				if num[j] 
+						
+				//num2[i] = num[j] //
+				
 			}
+		}
 			//실패하면서 얻는것들~~~~~~~~~~~~~~~~~~~~
 		
 		System.out.println("==================================================");
@@ -73,7 +80,7 @@ public class Ex250414 {
 //				{'*','*',' ',' ',' '},
 // chs의 [4][5]를 [1][2]로 바꾸는것도 괜찮겟는디? 근데 그럼 결과물은 동일한데 회전하는건 아님..
 		
-		System.out.println(Arrays.deepToString(chs));
+	//	System.out.println(Arrays.deepToString(chs));
 		
 		
 		char[][] result = new char[5][5];
@@ -81,7 +88,8 @@ public class Ex250414 {
 		for (int i = 0 ; i < result.length ; i++) {
 			for ( int j = 0; j < result.length ; j++) {
 				result[i][j] = chs[i][j];
-				System.out.println(Arrays.deepToString(result));
+				System.out.println(Arrays.toString(result[i]));
+				System.out.println(Arrays.toString(result[j]));
 			}
 		}
 		//=======================================================
