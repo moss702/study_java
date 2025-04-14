@@ -70,8 +70,7 @@ public class Ex_0413_NestLoop {
 			oddNum += 2;
 			System.out.println();
 		}
-		// 가운데 라인 긋고 k가 좌우로 하나씩 늘어나서 트리를 만드는걸 생각했는데
-		// 공백을 j가 채워주고 남은 부분에 k가 2개씩 늘어나서 채우는거였다..
+
 	
 		
 		
