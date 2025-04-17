@@ -5,28 +5,43 @@ import java.util.Arrays;
 //핵심 로직 class : CRUD
 public class StudentService {
 	// ====================필드 생성
-	Student[] students = new Student[1];
+	Student[] students = new Student[10];
 	int count;
+	
+	{ //초기화 블럭
+		students[count++] = new Student(1, "김", 90, 80, 90);
+		//점수도 int라 랜덤값 만들면 된다. 최저점 범위지정도 가능
+		students[count++] = new Student(2, "이", 80, 80, 90);
+	}
+	
 
 	// ====================메소드 생성
 	// ---------------------------------------등록
 	void register() {
 		System.out.println("[등록 기능]");
-		int no = StudentUtils.nextInt("학생학번 입력 > ");
+		int no = StudentUtils.nextInt("학생학번 입력 > ");	
 		String name = StudentUtils.nextLine("학생이름 입력 > ");
 		int kor = StudentUtils.nextInt("국어점수 입력 > ");
 		int eng = StudentUtils.nextInt("영어점수 입력 > ");
 		int math = StudentUtils.nextInt("수학점수 입력 > ");
-
-		students[count++] = new Student(no, name, kor, eng, math);
-		System.out.println(count);
-		// 점수가 Student[0]에 저장됨
-
-		if (count >= students.length) {
-			students = Arrays.copyOf(students, count + 1);
-		} // 저장 가능한 학생 수 증가
+		
+		//중복학번등록방지
+		boolean duplicate = true;
+		for (int i = 0; i < count; i++) {
+			if (students[i].no == no) {
+				System.out.println("이미 등록된 학번입니다.");
+				//알람은 띄웠고 이제 등록 못하게 해야함
+				duplicate = false;
+				break;
+			}
+		}
+		//등록가능정원추가
+		if (count == students.length && duplicate) {
+			students = Arrays.copyOf(students, students.length *2);
+			students[count++] = new Student(no, name, kor, eng, math);
+		} 
+		
 	}
-
 	// ---------------------------------------조회
 	void read() {
 		System.out.println("[조회 기능]");
@@ -42,50 +57,41 @@ public class StudentService {
 	// ---------------------------------------수정
 	void modify() {
 		System.out.println("[수정 기능]");
-		int serch = StudentUtils.nextInt("학생학번 입력 > ");
-
-		for (int i = 0; i < students.length; i++) {
-			if (students[i].no == serch) {
-				String name = StudentUtils.nextLine("학생이름 수정 > ");
-				int kor = StudentUtils.nextInt("국어점수 수정 > ");
-				int eng = StudentUtils.nextInt("영어점수 수정 > ");
-				int math = StudentUtils.nextInt("수학점수 수정 > ");
-
-				String edit = StudentUtils.nextLine("정말 수정하시겠습니까? y/n > ");
-				if (edit.equals("y")) { // boolean으로 하고 싶은데 입력을 참/거짓으로 받을수 있을까요..?
-					students[i] = new Student(serch, name, kor, eng, math);
-					break;
-				} else if (edit.equals("n")) {
-					break;
-				} // y/n 두가지 전부 작동이 되긴 하는데!!! 코드가 안예뻐요..!!!
-					// 조금 더 간결하게 하고싶으니까 수업전까지 더 고민해보기.
-			}
-		}
+		int no = StudentUtils.nextInt("학생학번 입력 > ");
+		//새 변수 만들필요 없다. 지역변수 no에 그냥 넣어둬도 됨.
+		Student s = null;
+		for (int i = 0; i < count; i++) {
+			//배열의 길이가 아니라 count로 잡는 이유 : 널포인터 발생방지
+			if (students[i].no == no) {
+				s = students[i];
+				//찾으면 동작그만, 대입하고 그냥 종료
+				break;
+			}//학생 탐색부분
+		} //이부분을 따로 메서드로 뺄거라서 수정사항대입 부분을 for문에 넣지않는다.
+		s.name = StudentUtils.nextLine("학생이름 수정 > ");
+		s.kor = StudentUtils.nextInt("국어점수 수정 > ");
+		s.eng = StudentUtils.nextInt("영어점수 수정 > ");
+		s.mat = StudentUtils.nextInt("수학점수 수정 > ");
 	}
-
+	// ---------------------------------------과목별 평균값
+//	void  () { 
+//		System.out.println("[과목별 평균값 확인]");
+	// (신규) 5. 과목별 평균값, 총평균(평균값의 평균) 출력
+	// ---------------------------------------총점 석차
+//	void  () { 
+//		System.out.println("[총점 석차 확인]");
+	//(신규) 6. 총점 석차순 정렬 (고득점자부터 출력)  : 버블정렬	
 	// ---------------------------------------삭제
 	void remove() {
 		System.out.println("[삭제 기능]");
-		// 1234중에 2가 없어진다면 124만 뜨게끔. 4를 3자리에 땡겨오기
-		int serch = StudentUtils.nextInt("학생학번 입력 > ");
+		int no = StudentUtils.nextInt("학생학번 입력 > ");
 		
-		for ( int i = 0; i < students.length ; i++ ) {
-			if (students[i].no == serch ) {
-				System.out.printf("[%d] %s\n\t총점 : %d , 평균 : %.2f\n", students[i].no, students[i].name, students[i].total(),
-						students[i].avg());
-				String edit = StudentUtils.nextLine("정말 삭제하시겠습니까? y/n > ");
-				if (edit.equals("y")) { //삭제안하고 다음인덱스를 덮어쓰면 될거같음..					
-					//헉 포인터익셉션 에러났음!!!!
-					for(int j = i + 1; j < students.length ;) {
-					students[i]= students[j];
-					i++; j++;
-					break;
-					}
-				} else {
-					break;
-				}
-				//수정기능에서는 실행 됐는데 왜 y 입력받은순간 터질까요..?
-			}	
+		for ( int i = 0; i < count ; i++ ) {
+			if (students[i].no == no) {
+				System.arraycopy(students, i + 1, students, i, count - 1 - i);
+				count--; //학생의 총인원수도 줄여주자!
+				break;
+			}
 		}
 	}
 	//---------------------------------------
