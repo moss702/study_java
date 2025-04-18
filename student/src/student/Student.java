@@ -6,13 +6,16 @@
  * 		// 등록 기능으로 학번 이름 점수를 등록 받기
  *		// 총점, 평균은 조회에 넣기..?
  *
- *		// 중복학번 학생 등록 방지
- *		// (신규) 5. 과목별 평균값, 총평균(평균값의 평균) 출력. main에서 추가
- *		// (신규) 6. 총점 석차순 정렬 (고득점자부터 출력)  : 버블정렬
- *		// 7.종료 
- *		// Student 클래스의 toString 재정의 (학생이 가진, 주소값이 아니라 학번이름점수가 뜨게)
- *		// ㄴproduct 마트 예제 참고 08_2
- *		//System.out.printf("[%d] %s\n\t총점 : %d , 평균 : %.2f\n", students[i].no, students[i].name, students[i].total(),
+ *	1 모든 필드, 메서드, 생성자 > 접근제한자 붙이기 (private. public)
+ *		필드 프라이빗 / 메서드 퍼블릭 / 생성자 퍼블릭
+ *		게터 세터 정의
+ *	2 어떤값을 입력하더라도 예외처리 (프로그램종료는 정상종료만 되도록.)
+ *	3 점수값 입력의 범위 0~100만 되도록
+ *	4 이름 입력은 한글만 인정, 범위 2글자~ 4글자 사이 //예외 또는 조건문 사용
+ *  5 임시데이터의 점수값을 랜덤으로 배정해서 시작. (60~100 사이)
+ *		
+ *	6 08_Shape_예제] 2차원도형-직각삼각형 추가 / 3차원도형-원기둥, 육면체, 삼각기둥(겉넓이 부피)
+ *						어떤 변수를 어떤 관계로 만들지 고민하기
  */
 package student;
 
@@ -22,12 +25,17 @@ public class Student {
 	// ====================필드생성
 	int no;
 	String name;
-	int kor;
-	int eng;
-	int mat;
+	
+//	public class subject {
+		int kor = 0;
+		int eng = 0;
+		int mat = 0;
+	//}
+	int ranScore;
 
 	int total;
 	double avg;
+	
 	// ====================생성자 생성
 	Student() {
 	};
@@ -52,5 +60,14 @@ public class Student {
 	double avg() { // 평균계산
 		return total() / 3d;
 	};
+	
+	public String toString() {
+		return String.format("%5d %5s %5d %5d %5d %6.2f %5d", no, name, kor, eng, mat, avg(), total());
+	}
+	
+	public static int ranScore() {
+		int ranScore = (int)(Math.random() * 40 + 60);
+		return ranScore;
+	}
 	
 }
