@@ -7,30 +7,51 @@ public class StudentService {
 	// ====================필드 생성
 	Student[] students = new Student[10];
 	Student[] sortedStudents = new Student[students.length];
-	int count;
-	
-	int n = Student.ranScore();
-/*	int[] n = new int [3];
-	for (int i = 0 ; i < n.length; i++) {
-		n[i] = Student.ranScore();
-		System.out.println();
-	}; */
-	// 60~100 난수를 만들긴했는데 학생들 점수가 전부 똑같이 들어갑니다..
-	// 배열 만들어서 난수 넣어두고 각자 꺼내 쓰기?.......
-	
+	public int count;
 	
 	{ //초기화 블럭
-		students[count++] = new Student(1, "김밥", n, n, n);
-		students[count++] = new Student(2, "샌드위치", 80, 80, 80);
-		students[count++] = new Student(3, "햄부기", 90, 90, 90);
-		students[count++] = new Student(4, "육쌈냉면", 100, 100, 100);
+		students[count++] = new Student(1, "김밥", ranScore(), ranScore(), ranScore());
+		students[count++] = new Student(2, "샌드위치", ranScore(), ranScore(), ranScore());
+		students[count++] = new Student(3, "햄부기", ranScore(), ranScore(), ranScore());
+		students[count++] = new Student(4, "육쌈냉면", ranScore(), ranScore(), ranScore());
 		
 		sortedStudents = students.clone();
 		rank();
 	}
+	
+	public int ranScore() { //학생점수 랜덤 메소드
+		return (int)(Math.random() * 41 + 60);
+	}
+	
 	// ====================메소드 생성
-	// ---------------------------------------등록
-	Student findBy(int no) {//반환 : 학생 / 입력 : 학번
+	//점수입력범위체크
+	public int checkRange(String subject, int input, int start, int end) {
+		if(input < start || input > end) {
+			throw new IllegalArgumentException(subject + "값의 범위가 벗어났습니다." + start + "~" + end + "사이 입력.");
+		}
+		return input;
+	}
+	//점수입력범위체크 오버로딩
+	public int checkRange(String subject, int input) { 
+		return checkRange(subject, input, 0, 100);
+	}
+	
+	//학생이름입력제한
+	public String inputName() {
+		String name = StudentUtils.nextLine("학생이름 입력 > ");
+		if(name.length() < 2 || name.length() > 4) {
+			throw new IllegalArgumentException("이름은 2~4글자로 입력하세요");
+		}
+		for(int i = 0 ; i < name.length() ; i++) {
+			if(name.charAt(i)<'가' || name.charAt(i) > '힣') {
+				throw new IllegalArgumentException("이름은 한글로 구성되어야 합니다");
+			}
+		}
+		return name;
+	}
+
+	//학번탐색
+	public Student findBy(int no) {
 		Student student = null;
 		for (int i = 0; i < count; i++) {
 			if (students[i].getNo() == no) {
@@ -39,11 +60,10 @@ public class StudentService {
 			}
 		}	
 		return student;
-		//해당타입의 기본값을 반환해줘야 한다.
-		//하지만 찾는다면? 그 타입을 반환
 	}
+	// ---------------------------------------등록
 
-	void register() {
+	public void register() {
 		int no;
 		System.out.println("[등록 기능]");
 		//등록.학번
@@ -55,59 +75,42 @@ public class StudentService {
 				System.out.println("이미 등록된 학번입니다.");
 				return;
 			}
-		} catch (ArrayStoreException notNum) {
-			System.out.println("잘못된 입력입니다.");
-			return;			
-		}
-		//등록.이름,점수
-		String name = StudentUtils.nextLine("학생이름 입력 > ");
-		//이름등록범위제한
-		if (name.length() < 2 || name.length() > 4) {
-			System.out.println("잘못된 입력입니다.");
-			return;
-		} 
-		// else if () //한글입력제한...
-/*		if (name >= "가" && name <= "힣") {
-			System.out.println("잘못된 입력입니다.");
-			return;
-		} */ // char가 아니라 string 제한해야하는데
-		 
-		
+		String name = inputName();
+
 		int kor = StudentUtils.nextInt("국어점수 입력 > ");
+		checkRange("국어", kor);
 		int eng = StudentUtils.nextInt("영어점수 입력 > ");
+		checkRange("영어", eng);
 		int mat = StudentUtils.nextInt("수학점수 입력 > ");
-		//scoreRange();
+		checkRange("수학", mat);
 		
 		//등록가능정원추가
 		if (count == students.length) {
 			students = Arrays.copyOf(students, students.length *2);
 		} 
 		students[count++] = new Student(no, name, kor, eng, mat);
+	
 		sortedStudents = Arrays.copyOf(students, students.length);
 		rank();
-		
 	}
-
-
 	// ---------------------------------------조회
-	void read() {
+	public void read() {
 		System.out.println("[조회 기능]");
 		print(students);		
 	}
 	
-	void readOrder() {
+	public void readOrder() {
 		System.out.println("석차순 조회 기능");
 		print(sortedStudents);		
 	}
 	
-	void print(Student[] stu) {
+	public void print(Student[] stu) {
 		for(int i = 0 ; i < count ; i++) {
 			System.out.println(stu[i]);
 		}
 	}
-
 	// ---------------------------------------수정
-	void modify() {
+	public void modify() {
 		System.out.println("[수정 기능]");
 		int no = StudentUtils.nextInt("학생학번 입력 > ");
 		Student s = findBy(no);
@@ -117,15 +120,15 @@ public class StudentService {
 		}
 
 		s.setName(StudentUtils.nextLine("학생이름 수정 > "));
-		s.setKor(StudentUtils.nextInt("국어점수 수정 > "));
-		s.setEng(StudentUtils.nextInt("영어점수 수정 > "));
-		s.setMat(StudentUtils.nextInt("수학점수 수정 > "));
+		s.setKor(checkRange("국어", StudentUtils.nextInt("국어점수 수정 > ")));
+		s.setEng(checkRange("영어", StudentUtils.nextInt("영어점수 수정 > ")));
+		s.setMat(checkRange("수학", StudentUtils.nextInt("수학점수 수정 > ")));
 		
 		sortedStudents = Arrays.copyOf(students, students.length);
 		rank();
 	}
 	// ---------------------------------------삭제
-	void remove() {
+	public void remove() {
 		System.out.println("[삭제 기능]");
 		int no = StudentUtils.nextInt("학생학번 입력 > ");
 		
@@ -145,7 +148,7 @@ public class StudentService {
 		rank();
 	}
 	// ---------------------------------------과목별 평균값 및 전체평균
-	void  allAvg() { 
+	public void  allAvg() { 
 		System.out.println("[과목별 평균값 확인]");
 		double avgKor = 0;
 		double avgEng = 0;
@@ -171,7 +174,7 @@ public class StudentService {
 	}
 
 	// ---------------------------------------총점 석차
-	void rank() {
+	public void rank() {
 		System.out.println("[총점 석차]");
 		for(int i = 0 ; i < count - 1; i++ ) {
 			int idx = i;

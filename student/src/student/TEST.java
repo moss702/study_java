@@ -13,6 +13,8 @@ public class TEST {
 }
 class nan{	
 	
+	public static char[] toString;
+
 	public static int ranScore() {
 	int ranScore = (int)(Math.random() * 40 + 60);
 	return ranScore;

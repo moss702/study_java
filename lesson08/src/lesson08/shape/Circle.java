@@ -1,7 +1,7 @@
 package lesson08.shape;
 
-public class Circle extends Shape {
-	int r ; //조상 Shape가 반지름 값을 안가지고 있어서 내가 만들엇음
+public class Circle extends Shape implements Shape2D {
+	int r ; 
 	public Circle() {}
 	public Circle(int r) {
 		this.r = r;
@@ -11,5 +11,8 @@ public class Circle extends Shape {
 	}
 	public double area() {
 		return r * r * Math.PI;
+	}
+	public String toString() {
+		return super.toString() + "\n둘레 : " + circum();
 	}
 }
