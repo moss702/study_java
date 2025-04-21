@@ -24,6 +24,18 @@ public class StudentService {
 	}
 	
 	// ====================메소드 생성
+	//학번탐색
+	public Student findBy(int no) {
+		Student student = null;
+		for (int i = 0; i < count; i++) {
+			if (students[i].getNo() == no) {
+				student = students[i];
+				break;
+			}
+		}	
+		return student;
+	}
+	
 	//점수입력범위체크
 	public int checkRange(String subject, int input, int start, int end) {
 		if(input < start || input > end) {
@@ -50,24 +62,12 @@ public class StudentService {
 		return name;
 	}
 
-	//학번탐색
-	public Student findBy(int no) {
-		Student student = null;
-		for (int i = 0; i < count; i++) {
-			if (students[i].getNo() == no) {
-				student = students[i];
-				break;
-			}
-		}	
-		return student;
-	}
 	// ---------------------------------------등록
 
 	public void register() {
 		int no;
 		System.out.println("[등록 기능]");
 		//등록.학번
-		try {
 			no = StudentUtils.nextInt("학생학번 입력 > ");	
 			//중복학번등록방지
 			Student s = findBy(no);
@@ -75,6 +75,7 @@ public class StudentService {
 				System.out.println("이미 등록된 학번입니다.");
 				return;
 			}
+		
 		String name = inputName();
 
 		int kor = StudentUtils.nextInt("국어점수 입력 > ");
@@ -85,13 +86,13 @@ public class StudentService {
 		checkRange("수학", mat);
 		
 		//등록가능정원추가
-		if (count == students.length) {
-			students = Arrays.copyOf(students, students.length *2);
-		} 
+		if(students.length == count) {
+			students = Arrays.copyOf(students, students.length * 2);
+		}
 		students[count++] = new Student(no, name, kor, eng, mat);
-	
 		sortedStudents = Arrays.copyOf(students, students.length);
 		rank();
+		
 	}
 	// ---------------------------------------조회
 	public void read() {
