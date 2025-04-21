@@ -75,7 +75,7 @@ public class Student {
 
 	public double avg() { // 평균계산
 		return total() / 3d;
-	};
+	}
 	
 	public String toString() { //학생 toString
 		return String.format("%5d %5s %5d %5d %5d %6.2f %5d", getNo(), getName(), getKor(), getEng(), getMat(), avg(), total());
