@@ -16,17 +16,21 @@ public class Ex250421 {
 //		System.out.println(Arrays.toString(protocol));		
 		/// 출력 : [https:, , search.naver.com, search.naver] ???
 
-		String cut = (url.substring(0,url.lastIndexOf("?")));			
-		String[] domain = cut.split(":/");
-		String protocol = String.join("", domain);
-		domain = protocol.split("/");
-		System.out.println("protocol, domain, fileName : " + Arrays.toString(domain));
-		/// 출력 : [https, search.naver.com, search.naver]
 		
+		String cut = (url.substring(0,url.lastIndexOf("?")));			
+		String[] urlFront = cut.split(":/"); //그래서 일단 녀석을 빼서 버렷어요
+		String protocol = String.join("", urlFront);
+		urlFront = protocol.split("/");
+		System.out.println("urlFront : " + Arrays.toString(urlFront));
+		/// 출력 : [https, search.naver.com, search.naver]
+		//배열로 묶었어요
 	
 		protocol = protocol.substring(0,protocol.indexOf("/"));
+		String domain = urlFront[1];
+		String fileName = urlFront[2];
 		System.out.println("protocol : " + protocol);
-		/// 출력 : https	
+		System.out.println("domain : " + domain);
+		System.out.println("fileName : " + fileName);
 		
 		System.out.println("===========쿼리스트링===========");
 		//쿼리스트링의 규칙
@@ -65,5 +69,7 @@ public class Ex250421 {
 		}
 		System.out.println("키[] : " + Arrays.toString(queryKey));
 		System.out.println("값[] : " + Arrays.toString(queryVal));
+	
 	}
 }
+

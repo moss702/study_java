@@ -15,6 +15,5 @@ public class Card {
 		String numbers = "23456789XJQKA";
 		String kinds = "♣♥◆♠";
 		return "[" + kinds.charAt(kind) + "," + numbers.charAt(number) + "]";
-		
 	}
 }
