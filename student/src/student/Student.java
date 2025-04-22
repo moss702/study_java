@@ -79,7 +79,7 @@ public class Student {
 	}
 	
 	public String toString() { //학생 toString
-		return String.format("%5d %5s %5d %5d %5d %6.2f %5d", getNo(), getName(), getKor(), getEng(), getMat(), avg(), total());
+		return String.format("%5d %10s %5d %5d %5d %6.2f %5d", getNo(), getName(), getKor(), getEng(), getMat(), avg(), total());
 	}
 		
 }

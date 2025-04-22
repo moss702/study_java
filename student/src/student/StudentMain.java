@@ -4,6 +4,7 @@ public class StudentMain {
 	public static void main(String[] args) {
 		StudentService service = new StudentService();
 		System.out.println("=======학생 점수 관리 프로그램=======");
+		
 		for (;;) {
 			try {
 				switch (StudentUtils.nextInt("1.등록 2.조회 3.수정 4.삭제 5.과목별평균 6.석차순 7.종료")) {
