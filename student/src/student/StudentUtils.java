@@ -18,5 +18,4 @@ public class StudentUtils {
 		String s = nextLine(msg);
 		return s.equalsIgnoreCase("y") || s.equalsIgnoreCase("yes");
 	}
-	
 }

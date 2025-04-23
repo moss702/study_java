@@ -1,14 +1,15 @@
 package student;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 //핵심 로직 class : CRUD
 public class StudentService {
-	// ====================필드 생성
+	// ====================필드 생성====================
 	private List<Student> students = new ArrayList<Student>();
-	private List<Student> sortedStudents = new ArrayList<Student>();
-
+	private List<Student> sortedStudents; //아래 초기화블럭에서 인스턴스화할거라서 여기서 new 안해도된다
+	
 	
 	{ //초기화 블럭
 		students.add(new Student(1, "김밥", ranScore(), ranScore(), ranScore()));
@@ -16,19 +17,12 @@ public class StudentService {
 		students.add(new Student(3, "샌드위치", ranScore(), ranScore(), ranScore()));
 		students.add(new Student(4, "오믈렛", ranScore(), ranScore(), ranScore()));
 		
-
-		
-//		sortedStudents = students; << 레퍼 가져온거라 덮어쓰기 댐
-//		sortedStudents = copyOf<students>;
-//		sortedStudents.set(0,students); <<이거 될줄알앗는디
-//		sortedStudents = List.copyOf(students); << 이것도 될줄알앗는디
-//		sortedStudents.addAll(0, students);<<students + sortstu라서 학생 두배이벤트됨..
 		sortedStudents = new ArrayList<Student>(students);
 		rank();
 	}
 	
-	// ====================메소드 생성
-	//학생점수 랜덤 메소드
+	// ====================메소드 생성====================
+	//학생점수 랜덤
 	public int ranScore() { 
 		return (int)(Math.random() * 41 + 60);
 	}
@@ -52,16 +46,14 @@ public class StudentService {
 		}
 		return input;
 	}
-	//점수입력범위체크 오버로딩
 	public int checkRange(String subject, int input) { 
 		return checkRange(subject, input, 0, 100);
 	}
 	
 	//학생이름입력제한
 	public String inputName() {
-		String name = StudentUtils.nextLine("학생이름 입력 > ");
-		String n = "[가-힣]{2,4}";		
-		if(!name.matches(n)) {
+		String name = StudentUtils.nextLine("학생이름 입력 > ");		
+		if(!name.matches("[가-힣]{2,4}")) {			
 			throw new IllegalArgumentException("이름은 한글 2~4글자로 입력하세요");
 		}
 		return name;
@@ -90,9 +82,9 @@ public class StudentService {
 		int mat = StudentUtils.nextInt("수학점수 입력 > ");
 		checkRange("수학", mat);
 		
-		students.add(new Student(no, name, kor, eng, mat));
-
-		sortedStudents = new ArrayList<Student>(students);
+		Student s2 = new Student(no, name, kor, eng, mat);
+		students.add(s2);
+		sortedStudents.add(s2);
 		rank();
 		
 	}
@@ -107,10 +99,13 @@ public class StudentService {
 		print(sortedStudents);
 	}
 	
-	public void print(List<Student> stu) { 
-		for(int i = 0 ; i < stu.size() ; i++) {
-			System.out.println(stu.get(i));
-		}
+	//출력 메소드
+	public void print(List<Student> stu) {
+//		for(int i = 0 ; i < stu.size() ; i++) {
+//			System.out.println(stu.get(i));
+//		} 
+		stu.forEach(System.out::println);
+		stu.forEach(s -> System.out.println(s));
 	}
 	// ---------------------------------------수정
 	public void modify() {
@@ -127,7 +122,6 @@ public class StudentService {
 		s.setEng(checkRange("영어", StudentUtils.nextInt("영어점수 수정 > ")));
 		s.setMat(checkRange("수학", StudentUtils.nextInt("수학점수 수정 > ")));
 
-		sortedStudents = new ArrayList<Student>(students);
 		rank();
 	}
 	// ---------------------------------------삭제
@@ -140,19 +134,14 @@ public class StudentService {
 			System.out.println("입력된 학번이 존재하지 않습니다.");
 			return;
 		}
-		for ( int i = 0; i < students.size() ; i++ ) {
-			if (students.get(i).getNo() == no) {
-				students.remove(i);
-				break;
-			}
-		}
-		
-		sortedStudents = new ArrayList<Student>(students);
-		rank();
+		students.remove(s);
+		sortedStudents.remove(s);
 	}
 	// ---------------------------------------과목별 평균값 및 전체평균
 	public void  allAvg() { 
 		System.out.println("[과목별 평균값 확인]");
+//		students.stream().map(s -> s.getKor());
+		
 		double avgKor = 0;
 		double avgEng = 0;
 		double avgMat = 0;
@@ -176,9 +165,9 @@ public class StudentService {
 		System.out.printf("전체평균 : %.2f\n", avgAll);
 	}
 
-	// ---------------------------------------총점 석차
+	// ---------------------------------------총점 석차 재정렬
 	public void rank() {
-		for(int i = 0 ; i < students.size(); i++ ) {
+		for(int i = 0 ; i < students.size() - 1; i++ ) {
 			int idx = i;
 			for(int j = 1 + i ; j < students.size() ; j++) {
 				if(sortedStudents.get(idx).total() < sortedStudents.get(j).total()) {
@@ -191,4 +180,17 @@ public class StudentService {
 		}		
 	}
 	//---------------------------------------
+	
+	public void compa() {	// 학번순 , 총점순
+		Comparator<Integer> comparator = new Comparator<>() {
+			public int compare(Integer o1, Integer o2) {
+				return -(o1 - o2);
+			}
+		};
+		students.sort(comparator) {
+			
+		});
+	}
+	
+	
 }
