@@ -181,16 +181,22 @@ public class StudentService {
 	}
 	//---------------------------------------
 	
-	public void compa() {	// 학번순 , 총점순
-		Comparator<Integer> comparator = new Comparator<>() {
-			public int compare(Integer o1, Integer o2) {
-				return -(o1 - o2);
-			}
-		};
-		students.sort(comparator) {
-			
-		});
-	}
+	public void compareTo(Student no) {	// 학번순 , 총점순
+		if(students.get(0).getNo() == 1) {
+			return ;
+		}
+		return;
+					//((Comparable<String>) no).compareTo(no.getNo());
+//		Comparator<Integer> comparator = new Comparator<>() {
+//			public int compare(Integer o1, Integer o2) {
+//				return -(o1 - o2);
+//			}
+//		};
+//		students.sort(comparator);
+//		System.out.println(students);
+		
+		
 	
+	};
 	
-}
+} //studentServiece 닫는블럭

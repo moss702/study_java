@@ -10,8 +10,6 @@ public class SortEx {
 		
 		System.out.println(str1.compareTo(str2));
 		
-		
-		Integer i = 0;
 		System.out.println(Integer.compare(10, 20)); //부호만 중요! 결과값은 -1
 
 		Set<Data> set = new TreeSet<>();

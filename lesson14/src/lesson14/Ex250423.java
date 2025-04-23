@@ -1,33 +1,49 @@
 package lesson14;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Ex250423 {
 	public static void main(String[] args) {
 		//Map을 사용한 문자의 빈도 계산
 		// { a: , b: , c: , d: }
-		// abcd가 key / string
-		// 개수가 val / integer / 있으면 +1
-		
 		String str = "aaaaabbbbbbbcccddddddddd";
+
 		// ? [aaaaa,bbbbbbb,ccc,ddddddddd]
-		// ? [0]의 길이 >> val
+		// ? [0]의 길이 >> val++
+		
 		char[] strChar = str.toCharArray();
 		for(int i = 0 ; i < strChar.length ; i++) {
-			System.out.println(strChar[i]);
-		} //문자열배열로 만들려고 했는데문자배열도 괜ㄴ찮은듯?
-		
-		Map<String,Integer> map = new TreeMap<>();
-		
-		for (int i = 0 ; i < strChar.length; i++) { //str에서 i로 abcd 체크.
-			if (strChar[i] == 'a') { map.put(,+1);
-			
-			//map.put("a", i++);			//j로 해당 i의 자리에 카운트 +1
 		}
+		System.out.println(Arrays.toString(strChar));
+		//[a, a, a, a, a, b, b, b, b, b, b, b, c, c, c, d, d, d, d, d, d, d, d, d]
+		
+		Map<String,Integer> map = new HashMap<>();
+			map.put("a", 0);
+			map.put("b", 0);
+			map.put("c", 0);
+			map.put("d", 0);
+			//{a=0, b=0, c=0, d=0}
+		
+			int a = 0;			//일단 작동 및 결과는 원하는대로 나왔는데
+			int b = 0;			//이렇게 변수가 많고
+			int c = 0;			//이렇게 길게 쓰는게 아닌거같습니다
+			int d = 0;			//이러면 알파벳 종류만큼 변수갯수와 if길이가 늘어날텐데..
+			
+		for (int i = 0 ; i < strChar.length; i++) {
+			if (strChar[i]  == 'a') {
+				map.put("a", ++a);
+			} else if (strChar[i] == 'b') { 	
+				map.put("b", ++b);
+			} else if (strChar[i] == 'c') { 
+				map.put("c", ++c);
+			} else if (strChar[i] == 'd') { 
+				map.put("d", ++d);
+			}
+		}
+		System.out.println(map);
+		//{a=5, b=7, c=3, d=9}
 		
 		
 //		//====================================================
