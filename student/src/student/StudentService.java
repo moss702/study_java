@@ -1,8 +1,10 @@
 package student;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
 
 //핵심 로직 class : CRUD
 public class StudentService {
@@ -12,6 +14,7 @@ public class StudentService {
 	
 	
 	{ //초기화 블럭
+	//	students.add(Student.builder().no(1).name("개똥이").kor(ranScore()).eng(ranScore()).mat(ranScore()).build());
 		students.add(new Student(1, "김밥", ranScore(), ranScore(), ranScore()));
 		students.add(new Student(2, "햄부기", ranScore(), ranScore(), ranScore()));
 		students.add(new Student(3, "샌드위치", ranScore(), ranScore(), ranScore()));
@@ -20,6 +23,18 @@ public class StudentService {
 		sortedStudents = new ArrayList<Student>(students);
 		rank();
 	}
+	
+	private static StudentService studentService = new StudentService();
+	//static이 붙으면 한번만 초기화. 안붙으면(재귀호출) 스택오버플로우 발생가능성 높아짐
+	//클래스변수의 라이프사이클(초기화시점)을 이해ㅡ
+	
+	private StudentService() {
+	
+	}
+	public static StudentService getInstance() {
+		return studentService;
+	} 
+	
 	
 	// ====================메소드 생성====================
 	//학생점수 랜덤
@@ -73,7 +88,7 @@ public class StudentService {
 				return;
 			}
 		
-		String name = inputName();
+		String name = inputName(); 
 
 		int kor = StudentUtils.nextInt("국어점수 입력 > ");
 		checkRange("국어", kor);
@@ -167,36 +182,32 @@ public class StudentService {
 
 	// ---------------------------------------총점 석차 재정렬
 	public void rank() {
-		for(int i = 0 ; i < students.size() - 1; i++ ) {
-			int idx = i;
-			for(int j = 1 + i ; j < students.size() ; j++) {
-				if(sortedStudents.get(idx).total() < sortedStudents.get(j).total()) {
-					idx = j;
-				}
-			}
-			Student tmp = sortedStudents.get(i);
-			sortedStudents.set(i, sortedStudents.get(idx));
-			sortedStudents.set(idx , tmp);
-		}		
+//		sortedStudents.sort(new Comparator<Student>() {
+//
+//			@Override
+//			public int compare(Student o1, Student o2) {
+//				return o2.total() - o1.total();
+//				
+//				//평균으로 하고 싶다면? 더블에도 기본 컴페어가 있다
+//				//return Double.compare(o2.avg(), o1.avg()) ;
+//			}
+//
+//		});
+
+		//==============2
+		//sortedStudents = new ArrayList<>(new TreeSet<>(sortedStudents));
+		// student에서 컴페어를 추가하고, 정렬규칙을 가진 student에게 의존.
+
+		//==============3
+	Collections.sort(sortedStudents, (o1, o2) -> o2.total() - o1.total());
+	
 	}
+	
+	
 	//---------------------------------------
 	
-	public void compareTo(Student no) {	// 학번순 , 총점순
-		if(students.get(0).getNo() == 1) {
-			return ;
-		}
-		return;
-					//((Comparable<String>) no).compareTo(no.getNo());
-//		Comparator<Integer> comparator = new Comparator<>() {
-//			public int compare(Integer o1, Integer o2) {
-//				return -(o1 - o2);
-//			}
-//		};
-//		students.sort(comparator);
-//		System.out.println(students);
-		
-		
 	
-	};
+
+	
 	
 } //studentServiece 닫는블럭

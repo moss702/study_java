@@ -6,7 +6,7 @@ package student;
 
 // Data Class
 // 학생 [개개인]의 개별정보
-public class Student {
+public class Student implements Comparable<Student> {
 	// ====================필드
 	private int no;
 	private String name;
@@ -81,5 +81,65 @@ public class Student {
 	public String toString() { //학생 toString
 		return String.format("%5d %10s %5d %5d %5d %6.2f %5d", getNo(), getName(), getKor(), getEng(), getMat(), avg(), total());
 	}
+
+
+
+	@Override
+	public int compareTo(Student o) {
+		// TODO Auto-generated method stub
+		return name.compareTo(o.name);
+	}	
+	
+	public static Builder builder(){ //빌더 인스턴스 생성.
+		//스테틱 클래스. 만들어야할(호출되야할) 클래스도 스테틱이어야 한다.
+		return new Builder();
+	}
+	static class Builder {
+		private int no;
+		private String name;
+		private int kor;
+		private int eng;
+		private int mat;
 		
+		public Builder no(int no) {
+			this.no = no;
+			return this;
+		}
+		public Builder name(String name) {
+			this.name = name;
+			return this;
+		}
+		public Builder kor(int kor) {
+			this.kor = kor;
+			return this;			
+		}
+		public Builder eng(int eng) {
+			this.eng = eng;
+			return this;			
+		}
+		public Builder mat(int mat) {
+			this.mat = mat;
+			return this;			
+		}
+		public Student build() {
+			return new Student(this);
+		}
+	}
+	
+	private Student(Builder builder) {
+		this.no = builder.no;
+		this.name = builder.name;
+		this.kor = builder.kor;
+		this.eng = builder.eng;
+		this.mat = builder.mat;
+	}
+	
+//	public static void main(String[] args) {
+//		Student student = Student.builder().no(1).name("새똥").build();
+//		//빌더와 빌드 사이 .을 통해 필요한 녀석에게만 접근.
+//		//메서드 체인? 지속적으로 자기값으로 돌아옴. 빌더 . 학번. 빌더. 네임.
+//		System.out.println(student);
+//	}
+//	
+	
 }
