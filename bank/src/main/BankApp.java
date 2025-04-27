@@ -5,7 +5,6 @@ import utils.BankUtils;
 
 public class BankApp { 
 	public static void main(String[] args) {
-		while(true) {
 			System.out.println(" __                         __       \r\n"
 					+ "|  \\                       |  \\      \r\n"
 					+ "| ▓▓____   ______  _______ | ▓▓   __ \r\n"
@@ -17,6 +16,7 @@ public class BankApp {
 					+ " \\▓▓▓▓▓▓▓  \\▓▓▓▓▓▓▓\\▓▓   \\▓▓\\▓▓   \\▓▓\r\n"
 					+ "");
 			System.out.println("===================================================");
+		while(true) {
 			BankService.getInstance().menu();
 			
 			
