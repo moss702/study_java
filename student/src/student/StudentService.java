@@ -20,6 +20,7 @@ public class StudentService {
 		students.add(new Student(3, "샌드위치", ranScore(), ranScore(), ranScore()));
 		students.add(new Student(4, "오믈렛", ranScore(), ranScore(), ranScore()));
 		
+		//students.forEach(System.out::println);
 		sortedStudents = new ArrayList<Student>(students);
 		rank();
 	}
@@ -119,7 +120,7 @@ public class StudentService {
 //		for(int i = 0 ; i < stu.size() ; i++) {
 //			System.out.println(stu.get(i));
 //		} 
-		stu.forEach(System.out::println);
+		//stu.forEach(System.out::println);
 		stu.forEach(s -> System.out.println(s));
 	}
 	// ---------------------------------------수정
