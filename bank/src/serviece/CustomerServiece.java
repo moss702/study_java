@@ -11,7 +11,7 @@ public class CustomerServiece {
 	//가입한 데이터를 이 리스트에 넣을 예정
 	private Customer loginCustomer; 
 	
-	String serchId;
+	String serchId; //로그인정보 저장용
 
 	public Customer getLoginCustomer() {
 		return loginCustomer;
