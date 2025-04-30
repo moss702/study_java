@@ -1,11 +1,19 @@
 package student;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.TreeSet;
 
+@SuppressWarnings("unchecked")
 //핵심 로직 class : CRUD
 public class StudentService {
 	// ====================필드 생성====================
@@ -14,12 +22,22 @@ public class StudentService {
 	
 	
 	{ //초기화 블럭
-	//	students.add(Student.builder().no(1).name("개똥이").kor(ranScore()).eng(ranScore()).mat(ranScore()).build());
-		students.add(new Student(1, "김밥", ranScore(), ranScore(), ranScore()));
-		students.add(new Student(2, "햄부기", ranScore(), ranScore(), ranScore()));
-		students.add(new Student(3, "샌드위치", ranScore(), ranScore(), ranScore()));
-		students.add(new Student(4, "오믈렛", ranScore(), ranScore(), ranScore()));
-		
+		ObjectInputStream ois = null; //try catch 해야해서 밖에서 선언. (보조스트림이기 때문에 close해줘야한다)
+		try {
+			ois = new ObjectInputStream(new FileInputStream("data/student.ser")); //그냥 슬래시만 써도 하위디렉토리로 연결
+			//직렬화(시리얼라이즈) 파일
+			//확장자명 아무거나 넣어도 상관없음 : 해석하는건 운영체제 담당.
+			students = (List<Student>)ois.readObject();
+			ois.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("파일을 불러올 수 없습니다. 임시 데이터셋으로 진행합니다.");
+			students.add(new Student(1, "김밥", ranScore(), ranScore(), ranScore()));
+			students.add(new Student(2, "햄부기", ranScore(), ranScore(), ranScore()));
+			students.add(new Student(3, "샌드위치", ranScore(), ranScore(), ranScore()));
+			students.add(new Student(4, "오믈렛", ranScore(), ranScore(), ranScore()));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		//students.forEach(System.out::println);
 		sortedStudents = new ArrayList<Student>(students);
 		rank();
@@ -76,7 +94,7 @@ public class StudentService {
 	}
 	// ---------------------------------------등록
 
-	public void register() {
+	public void register() { 
 		int no;
 		System.out.println("[등록 기능]");
 
@@ -102,6 +120,7 @@ public class StudentService {
 		students.add(s2);
 		sortedStudents.add(s2);
 		rank();
+		save();
 		
 	}
 	// ---------------------------------------조회
@@ -122,6 +141,7 @@ public class StudentService {
 //		} 
 		//stu.forEach(System.out::println);
 		stu.forEach(s -> System.out.println(s));
+		save();
 	}
 	// ---------------------------------------수정
 	public void modify() {
@@ -139,6 +159,7 @@ public class StudentService {
 		s.setMat(checkRange("수학", StudentUtils.nextInt("수학점수 수정 > ")));
 
 		rank();
+		save();
 	}
 	// ---------------------------------------삭제
 	public void remove() {
@@ -152,6 +173,7 @@ public class StudentService {
 		}
 		students.remove(s);
 		sortedStudents.remove(s);
+		save();
 	}
 	// ---------------------------------------과목별 평균값 및 전체평균
 	public void  allAvg() { 
@@ -204,9 +226,21 @@ public class StudentService {
 	
 	}
 	
-	
-	//---------------------------------------
-	
+	//---------------------------------------학생 파일 저장
+	private void save() { //파일이 다른곳에서 열려있다면 저장이 안됨. *예외발생
+		try {
+			File file = new File("data"); //현재 디렉토리 위치 기준(상대경로)
+			if(!file.exists()) { //데이터파일이 없다면?
+				file.mkdirs(); //생성해라
+			}
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(file, "student.ser"))); //file 밑에 "student.ser" 파일을 만들겠다.
+			oos.writeObject(students);
+			oos.close();
+		} catch (IOException e) {
+			System.out.println("파일 접근 권한이 없습니다.");
+			
+		}
+	}
 	
 
 	

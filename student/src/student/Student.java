@@ -4,9 +4,11 @@
  */
 package student;
 
+import java.io.Serializable;
+
 // Data Class
 // 학생 [개개인]의 개별정보
-public class Student implements Comparable<Student> {
+public class Student implements Comparable<Student>, Serializable {
 	// ====================필드
 	private int no;
 	private String name;
