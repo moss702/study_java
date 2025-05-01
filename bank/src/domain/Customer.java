@@ -3,7 +3,6 @@ package domain;
 public class Customer { //고객 정보 (등록, 탈퇴)
 	//이름, 연락처, 이메일, 회원번호, 아이디, 비밀번호
 	
-	
 	//========================================== 필드
 	private int no; //회원번호
 	private String name; //이름
@@ -15,8 +14,6 @@ public class Customer { //고객 정보 (등록, 탈퇴)
 	//기본 생성자
 	//모든 필드사용 생성자
 	//getter/setter
-	
-	
 	
 	//==========================================생성자, getter/setter, toString
 	
