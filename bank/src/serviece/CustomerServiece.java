@@ -2,6 +2,7 @@ package serviece;
 
 import java.util.ArrayList;
 import java.util.List;
+import static utils.BankUtils.*;
 
 import domain.Customer;
 import utils.BankUtils;
@@ -23,6 +24,7 @@ public class CustomerServiece {
 		return CustomerServiece;
 	} //싱글톤 설정
 	
+//	private AcountServiece acountServiece = AcountServiece.getInstance();
 	
 	{
 		customers.add(new Customer(1,"새똥이", "010-1111-2222","ssa@gmail.com", "ssa", "1234"));
@@ -31,7 +33,7 @@ public class CustomerServiece {
 	//==============================================================================
 	//입력제한_이름
 	public String inputName() {
-		String name =  BankUtils.nextLine("이름 입력 > ");		
+		String name =  nextLine("이름 입력 > ");		
 		if(!name.matches("[가-힣]{2,4}")) {			
 			throw new IllegalArgumentException("이름은 한글 2~4글자로 입력하세요");
 		}
@@ -39,7 +41,7 @@ public class CustomerServiece {
 	}
 	//입력제한_ID
 	public String inputId() {
-		String id =  BankUtils.nextLine("ID 입력 > ");		
+		String id =  nextLine("ID 입력 > ");		
 		if(!id.matches("[A-Za-z0-9_+&*-]{+}")) {			
 			throw new IllegalArgumentException("id는 알파벳,숫자 구성으로 입력하세요");
 		}
@@ -62,23 +64,39 @@ public class CustomerServiece {
 		return tel;
 	}
 	
+	public Customer findByNo(int no) {
+		for(Customer c : customers) {
+			if(c.getNo() == no) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public Customer findByID(String id) {
+		for(Customer c : customers) {
+			if(c.getId() == id) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	
 //==============================================================================
 	//등록_회원가입
 	public void register() {
-		String name, tel, email, id, pw;
-		int count = customers.size();
-		
 		System.out.println("[회원가입 정보 입력]");
-		name = inputName(); 
-		tel = inputTel(); 
-		id = inputId(); 
-		pw = BankUtils.nextLine("pw 입력 > ");
-		email = inputEmail(); 
+		String name = nextLine("이름 입력 > ");
+		String tel = nextLine("HP 입력(010-1111-2222) > ");
+		String email = nextLine("e-mail 입력 > ");
+		String id = nextLine("ID 입력 > ");
+		String pw = nextLine("PW 입력 > ");
+		int no = customers.isEmpty() ? 1 : customers.get(customers.size()-1).getNo()+1;
+		Customer customer = new Customer(no, name, tel, email, id, pw);
+		customers.add(customer);
 		
-		Customer c = new Customer(count, name, tel, email, id, pw);
-		customers.add(c);
 		System.out.println("회원가입 완료. 로그인해주세요.");
-		
 		
 	}
 	
@@ -110,44 +128,45 @@ public class CustomerServiece {
 	}
 	
 	//회원정보_조회
-	public void read() {
+	public void mypage() {
 		System.out.println("[내 회원정보 조회]");
-		
-		customers.forEach(System.out::println);
-		//이거 지금 모든 회원의 정보가 다 뜨는데...!
-		//아까 입력한 아이디로 회원넘버 가져와서 제한을 둬야할듯...한데 어떻게 가져오나요?
-		//id를 호출할 수 있게 로그인 외 전부를 내부클래스로 전부 넣기........는 아닐듯..
-		//변수 하나 만들고 그 안에 id 넣어둔채 이퀄스 확인해서 정보 가져오기..?
-		
-		//String serchId를 만들었음!! list.id랑 이퀄스 해서 걔만 출력하자!!
+		System.out.println(loginCustomer);
+		System.out.println("[내 계좌정보 조회]");
+		AcountServiece.getInstance().print(AcountServiece.getInstance().findAcountsBy(loginCustomer)); //내 계좌들.
 	}
-	
+		
 	//회원정보_수정
 	public void modify() {
 		System.out.println("[내 회원정보 수정]");
-		//조회에서 내정보만 띄우기 해결해야 이걸 할수있다..!!
+		String id = nextLine("[수정]ID > ");
+		Customer c = findByID(id);
+		if(c == null) {
+			System.out.println("회원정보 없음");
+			return;
+		}
+		String name = nextLine("[수정]이름 입력 > ");
+		String tel = nextLine("[수정]HP 입력(010-1111-2222) > ");
+		String email = nextLine("[수정]e-mail 입력 > ");
+		String pw = nextLine("[수정]PW 입력 > ");
+		
+		c.setName(name);
+		c.setTel(tel);
+		c.setEmail(email);
+		c.setPw(pw);
 	}
 	
 	//회원정보삭제_탈퇴
 	public void remove() {
-	// 로그인 되어있는 상태인데 바로 삭제할수 있을까? 그럼 무슨 정보를 가져올수있지..?
-		//조회에서 특정 멤버 정보만 가져오는걸 해결해야 코드가 심플해질듯
-	//확인차 아이디 재입력 받는건 어떨까
-		String id = BankUtils.nextLine(" 아이디  > ");
-		for(Customer c : customers) {
-			if(c.getId().equals(id)) {
-				boolean y = BankUtils.nextConfirm("[정말 탈퇴하시겠습니까? y/yes]");
-				if(y) {
-					customers.remove(c);
-					System.out.println("[탈퇴 처리 되었습니다.]");
-					break; 
-				} else { System.out.println("탈퇴처리 취소 되었습니다."); }
-			} else {
-				System.out.println("[존재하지 않는 ID 입니다.]"); 
-				break;	
-			}
+		System.out.println("[탈퇴 서비스]");
+		if(!AcountServiece.getInstance().findAcountsBy(loginCustomer).isEmpty()){
+			System.out.println("계좌를 소지하고 있습니다. 해지 후 탈퇴가 가능합니다.");
+			return;
 		}
+		
+		if(!nextConfirm("[정말 탈퇴하시겠습니까?")) {
+			return;
+		}
+		customers.remove(loginCustomer);
+		logout();
 	}
-	
-	
 }

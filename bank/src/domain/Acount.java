@@ -22,10 +22,10 @@ public class Acount { //계좌 정보 (추가, 예금, 출금, 이체)
 	private String pw;
 	
 	//한도액수
-	private long limit;
+	private long limit = 1_000_000; //이체한도
 	
 	//계좌개설일자
-	private Date date;
+	private Date date = new Date();    //이 객체를 생성한 현재시간
 	
 	
 	
@@ -33,14 +33,11 @@ public class Acount { //계좌 정보 (추가, 예금, 출금, 이체)
 	public Acount() {
 	}
 
-	public Acount(int no, long amount, Customer customer, String pw, long limit, Date date) {
+	public Acount(int no, Customer customer, String pw) {
 		super();
 		this.no = no;
-		this.amount = amount;
 		this.customer = customer;
 		this.pw = pw;
-		this.limit = limit;
-		this.date = date;
 	}
 
 	public int getNo() {

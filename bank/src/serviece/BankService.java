@@ -12,7 +12,9 @@ public class BankService {
 	} //싱글톤 설정
 	
 	private CustomerServiece customerServiece = CustomerServiece.getInstance();
+	private AcountServiece acountServiece = AcountServiece.getInstance();
 	//싱글톤 생성했으니 싱글톤 호출
+
 	
 	public void menu() {
 		try {
@@ -29,19 +31,34 @@ public class BankService {
 			}
 			else {
 				System.out.println("===============로그인 상태");
-				int no = BankUtils.nextInt("[1.로그아웃] [2.내정보 조회] [3.내정보 수정] [4.탈퇴]");	
+				int no = BankUtils.nextInt("[1.내정보 조회] [2.내정보 수정] [3.탈퇴] [4.계좌개설] [5.입금] [6.출금] [7.이체] [8.계좌해지] [9.로그아웃]");	
 				switch (no) {
 					case 1 :
-						customerServiece.logout();
+						customerServiece.mypage();
 						break;
 					case 2 :
-						customerServiece.read();
-						break;
-					case 3 :
 						customerServiece.modify();
 						break;
-					case 4 :
+					case 3 :
 						customerServiece.remove();
+						break;
+					case 4 :
+						acountServiece.open();
+						break;
+					case 5 :
+						acountServiece.deposit();
+						break;
+					case 6 :
+						acountServiece.withdraw();
+						break;
+					case 7 :
+						acountServiece.transfer();
+						break;
+					case 8 :
+						acountServiece.close();
+						break;
+					case 9 :
+						customerServiece.logout();
 						break;
 				}
 			}
