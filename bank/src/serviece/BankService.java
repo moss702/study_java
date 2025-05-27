@@ -62,10 +62,9 @@ public class BankService {
 						break;
 				}
 			}
-		}			catch (NumberFormatException e) {
+		}	catch (NumberFormatException e) {
 			System.out.println("정확한 숫자를 입력하세요");
-		}
-		catch (IllegalArgumentException e) {
+		}	catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		} 
 	}
